@@ -49,6 +49,7 @@ module.exports = function(flags) {
   }
 
   // add default externs
+  // TODO(samthor): this should load browser code, merge into a single file
   if (!externs) {
     externs = loadExterns();
   }

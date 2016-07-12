@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/google/closure-compiler/issues"
   },
-  "homepage": "https://developers.google.com/closure/compiler/"
+  "homepage": "https://developers.google.com/closure/compiler/",
+  "devDependencies": {
+    "ncp": "^2.0.0"
+  }
 }

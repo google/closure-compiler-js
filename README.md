@@ -30,10 +30,10 @@ The module provides `compile` as a low-level method to compile JavaScript.
 const compiler = require('closure-compiler-js').compiler;
 
 const flags = {
-  jsCode: [{source: 'var x = 1; alert(x);'}],
+  jsCode: [{source: 'var x = 1 + 2;'}],
 };
 const out = compile(flags);
-console.info(out.compiledCode);
+console.info(out.compiledCode);  // will print 'var x = 3;\n'
 ```
 
 ## License

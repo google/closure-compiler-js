@@ -1,5 +1,3 @@
 node_modules
 .DS_Store
-contrib
-externs
-compile.js
+build

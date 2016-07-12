@@ -25,12 +25,13 @@ Contributions are welcome.
 ### Native Node Usage
 
 The module provides `compile` as a low-level method to compile JavaScript.
+By default, this compiles ES6 to ES5 and includes the default set of EcmaScript externs files.
 
 ```js
 const compiler = require('closure-compiler-js').compiler;
 
 const flags = {
-  jsCode: [{source: 'var x = 1 + 2;'}],
+  jsCode: [{source: 'const x = 1 + 2;'}],
 };
 const out = compile(flags);
 console.info(out.compiledCode);  // will print 'var x = 3;\n'

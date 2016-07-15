@@ -14,7 +14,7 @@ However, this has a few tradeoffs- some features are not available and performan
 ### Installation
 
 ```bash
-npm install --save closure-compiler-js
+npm install --save google-closure-compiler-js
 ```
 
 ### Grunt/Gulp
@@ -28,7 +28,7 @@ The module provides `compile` as a low-level method to compile JavaScript.
 By default, this compiles ES6 to ES5 and includes the default set of ECMAScript externs files.
 
 ```js
-const compiler = require('closure-compiler-js').compiler;
+const compiler = require('google-closure-compiler-js').compiler;
 
 const flags = {
   jsCode: [{source: 'const x = 1 + 2;'}],

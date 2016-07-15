@@ -28,7 +28,7 @@ The module provides `compile` as a low-level method to compile JavaScript.
 By default, this compiles ES6 to ES5 and includes the default set of ECMAScript externs files.
 
 ```js
-const compiler = require('google-closure-compiler-js').compiler;
+const compile = require('google-closure-compiler-js').compile;
 
 const flags = {
   jsCode: [{source: 'const x = 1 + 2;'}],

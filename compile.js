@@ -30,7 +30,7 @@ let externs;
  */
 function loadExterns() {
   const fs = require('fs');
-  const path = './build/externs';
+  const path = './externs';
   const all = fs.readdirSync(path); 
 
   return all.filter(x => x.endsWith('.js')).map(x => {

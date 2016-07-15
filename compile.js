@@ -21,6 +21,7 @@
 
 'use strict';
 
+const path = require('path');
 const compile = require('./jscomp.js');
 
 let externs;

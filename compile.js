@@ -21,7 +21,7 @@
 
 'use strict';
 
-const compile = require('./build/compile.js');
+const compile = require('./jscomp.js');
 
 let externs;
 

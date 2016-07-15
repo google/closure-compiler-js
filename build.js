@@ -19,13 +19,6 @@
 
 const spawn = require('child_process').spawnSync;
 const ncp = require('ncp');
-const fs = require('fs');
-
-try {
-  fs.mkdirSync('./build');
-} catch (e) {
-  // ignore, probably exists
-}
 
 const moduleName = 'com.google.javascript:closure-compiler-gwt';
 const compilerBuild = spawn('mvn', ['-DskipTests', '-pl', moduleName], {
@@ -38,12 +31,12 @@ if (compilerBuild.status !== 0) {
 }
 
 const targetPath = './closure-compiler/target/closure-compiler-gwt-1.0-SNAPSHOT/jscomp/jscomp.js';
-ncp(targetPath, './build/compile.js', err => {
+ncp(targetPath, './jscomp.js', err => {
   if (err) {
     throw new Error(err);
   }
   ['contrib', 'externs'].forEach(name => {
-    ncp('./closure-compiler/' + name, './build/' + name, function(err) {
+    ncp('./closure-compiler/' + name, './' + name, function(err) {
       if (err) {
         throw new Error(err);
       }

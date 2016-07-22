@@ -34,17 +34,15 @@ function loadExterns() {
   const p = path.resolve(__dirname, 'externs');
   const all = fs.readdirSync(p);
 
-  return all.filter(x => x.endsWith('.js')).map(x => {
+  return all.filter(name => name.endsWith('.js')).map(name => {
     return {
-      source: fs.readFileSync(path.resolve(p, x), {encoding: 'UTF-8'}),
+      name,
+      source: fs.readFileSync(path.resolve(p, name), {encoding: 'UTF-8'}),
     };
   });
 }
 
 module.exports = function(flags) {
-  const clone = {
-    languageIn: 'ES6',  // TODO(samthor): assume this in upstream code
-  };
   for (const k in flags) {
     clone[k] = flags[k];
   }

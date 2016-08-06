@@ -22,4 +22,5 @@
 
 module.exports = {
   compile: require('./compile.js'),
+  gulp: require('./lib/gulp'),
 };

@@ -22,5 +22,8 @@
   "homepage": "https://developers.google.com/closure/compiler/",
   "devDependencies": {
     "ncp": "^2.0.0"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.7"
   }
 }

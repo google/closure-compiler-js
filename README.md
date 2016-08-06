@@ -26,6 +26,7 @@ Contributions are welcome.
 
 The module provides `compile` as a low-level method to compile JavaScript.
 By default, this compiles ES6 to ES5 and includes the default set of ECMAScript externs files.
+For now, the flags are [listed in source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/gwt/client/GwtRunner.java#L73).
 
 ```js
 const compile = require('google-closure-compiler-js').compile;

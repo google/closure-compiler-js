@@ -43,6 +43,7 @@ function loadExterns() {
 }
 
 module.exports = function(flags) {
+  const clone = {};
   for (const k in flags) {
     clone[k] = flags[k];
   }

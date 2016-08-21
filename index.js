@@ -23,4 +23,5 @@
 module.exports = {
   compile: require('./compile.js'),
   gulp: require('./lib/gulp'),
+  webpack: require('./lib/webpack'),
 };

@@ -36,9 +36,21 @@ function loadExterns() {
 
   return all.filter(name => name.endsWith('.js')).map(name => {
     return {
-      name,
-      source: fs.readFileSync(path.resolve(p, name), {encoding: 'UTF-8'}),
+      path: name,
+      src: fs.readFileSync(path.resolve(p, name), {encoding: 'UTF-8'}),
     };
+  });
+}
+
+/**
+ * TODO(samthor): Remove at next release.
+ *
+ * @param {!Array<{path, src}>} files to update for 20160713 release
+ */
+function updateFiles(files) {
+  files.forEach(file => {
+    file.name = file.path;
+    file.source = file.src;
   });
 }
 
@@ -54,6 +66,10 @@ module.exports = function(flags) {
     externs = loadExterns();
   }
   clone.externs = (clone.externs || []).concat(externs);
+  clone.jsCode = (clone.jsCode || []);
+
+  updateFiles(clone.externs);
+  updateFiles(clone.jsCode);
 
   const out = compile(clone);
 

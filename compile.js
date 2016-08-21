@@ -22,7 +22,7 @@
 'use strict';
 
 const path = require('path');
-const compile = require('./jscomp.js');
+const jscomp = require('./jscomp.js');
 
 let externs;
 
@@ -71,7 +71,7 @@ module.exports = function(flags) {
   updateFiles(clone.externs);
   updateFiles(clone.jsCode);
 
-  const out = compile(clone);
+  const out = jscomp(clone);
 
   // hide weird GWT internals
   out.warnings = [...out.warnings];

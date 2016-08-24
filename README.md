@@ -92,10 +92,11 @@ As of release v20160822, commonJS imports may be broken: we recommend that you c
 
 The Closure Compiler in JS supports many of the flags supported by the Java-based Closure Compiler.
 For now, the supported flags are [listed in source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/gwt/client/GwtRunner.java#L93).
+Specify these flags as `camelCase` format, and not like `camel_case` or `--camel_case`.
 
 Notably, unless you're using a build system, you have to specify code via flags.
 Both `jsCode` and `externs` accept an array containing objects with `src`, `path`, and `sourceMap` properties.
-For those of you familiar with [Closure syntax](https://developers.google.com/closure/compiler/docs/js-for-compiler), that's `Array<{src: string, path: string, sourceMap: string}`.
+For those of you familiar with [Closure syntax](https://developers.google.com/closure/compiler/docs/js-for-compiler), that's `Array<{src: string, path: string, sourceMap: string}>`.
 
 <!--
 Using `path`, you can construct a virtual filesystem for use with ES6 imports or CommonJS imports (although don't forget to specify `processCommonJsModules: true`).

@@ -7,36 +7,99 @@ Any bugs not related to the plugins themselves should be reported to the [main r
 
 Unlike other packages, this allows Closure Compiler to run entirely in JS.
 *Java is not required.*
-However, this has a few tradeoffs- some features are not available and performance is not on-par with the Java implementation.
+
+This is an experimental release- some features are not available and performance may not be on-par with the Java implementation.
 
 ## Usage
 
-### Installation
+First, install the latest version-
 
 ```bash
 npm install --save google-closure-compiler-js
 ```
 
-### Grunt/Gulp
-
-As of July 2016, neither a Grunt Task nor a Gulp Plugin is available.
-Contributions are welcome.
-
 ### Native Node Usage
 
 The module provides `compile` as a low-level method to compile JavaScript.
 By default, this compiles ES6 to ES5 and includes the default set of ECMAScript externs files.
-For now, the flags are [listed in source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/gwt/client/GwtRunner.java#L73).
+For example-
 
 ```js
 const compile = require('google-closure-compiler-js').compile;
 
 const flags = {
-  jsCode: [{source: 'const x = 1 + 2;'}],
+  jsCode: [{src: 'const x = 1 + 2;'}],
 };
 const out = compile(flags);
 console.info(out.compiledCode);  // will print 'var x = 3;\n'
 ```
+
+### Build Systems
+
+#### Webpack
+
+Your `webpack.config.js` should look like this-
+
+```js
+const ClosureCompiler = require('google-closure-compiler-js').webpack;
+const path = require('path');
+
+module.exports = {
+  entry: [
+    path.join(__dirname, 'app.js')
+  ],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'app.min.js'
+  },
+  plugins: [
+    new ClosureCompiler({
+      options: {
+        languageIn: 'ECMASCRIPT6',
+        languageOut: 'ECMASCRIPT5',
+        compilationLevel: 'ADVANCED',
+        warningLevel: 'VERBOSE',
+      },
+    })
+  ]
+};
+```
+
+#### Gulp
+
+Your `gulpfile.js` should contain a task like this-
+
+```js
+const compiler = require('google-closure-compiler-js').gulp();
+
+gulp.task('script', function() {
+  return gulp.src('./path/to/src.js', {base: './'})
+      // your other steps here
+      .pipe(compiler({
+          compilationLevel: 'SIMPLE',
+          warningLevel: 'VERBOSE',
+          outputWrapper: '(function(){\n%output%\n}).call(this)',
+          jsOutputFile: 'output.min.js',  // outputs single file
+          createSourceMap: true,
+        }))
+      .pipe(gulp.dest('./dist'));
+});
+```
+
+As of release v20160822, commonJS imports may be broken: we recommend that you compile a single file only (e.g. via Browserify or other tools), or use ES6 imports.
+
+### Flags
+
+The Closure Compiler in JS supports many of the flags supported by the Java-based Closure Compiler.
+For now, the supported flags are [listed in source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/gwt/client/GwtRunner.java#L93).
+
+Notably, unless you're using a build system, you have to specify code via flags.
+Both `jsCode` and `externs` accept an array containing objects with `src`, `path`, and `sourceMap` properties.
+For those of you familiar with [Closure syntax](https://developers.google.com/closure/compiler/docs/js-for-compiler), that's `Array<{src: string, path: string, sourceMap: string}`.
+
+<!--
+Using `path`, you can construct a virtual filesystem for use with ES6 imports or CommonJS imports (although don't forget to specify `processCommonJsModules: true`).
+-->
 
 ## License
 

@@ -35,7 +35,7 @@ ncp(targetPath, './jscomp.js', err => {
   if (err) {
     throw new Error(err);
   }
-  ['contrib', 'externs'].forEach(name => {
+  ['contrib'].forEach(name => {
     ncp('./closure-compiler/' + name, './' + name, function(err) {
       if (err) {
         throw new Error(err);

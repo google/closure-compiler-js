@@ -31,8 +31,8 @@ module.exports = function(flags) {
   const out = jscomp(clone);
 
   // hide weird GWT internals
-  out.warnings = [...out.warnings];
-  out.errors = [...out.errors];
+  out.warnings = Array.prototype.slice.call(out.warnings);
+  out.errors = Array.prototype.slice.call(out.errors);
 
   return out;
 };

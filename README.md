@@ -18,9 +18,7 @@ First, install the latest version-
 npm install --save google-closure-compiler-js
 ```
 
-### Native Node Usage
-
-The module provides `compile` as a low-level method to compile JavaScript.
+The module supports modern web browsers as well as Node v4 LTS, and provides `compile` as a low-level method to compile JavaScript.
 By default, this compiles ES6 to ES5 and includes the default set of ECMAScript externs files.
 For example-
 
@@ -34,9 +32,9 @@ const out = compile(flags);
 console.info(out.compiledCode);  // will print 'var x = 3;\n'
 ```
 
-### Build Systems
+## Build Systems
 
-#### Webpack
+### Webpack
 
 Your `webpack.config.js` should look like this-
 
@@ -65,7 +63,7 @@ module.exports = {
 };
 ```
 
-#### Gulp
+### Gulp
 
 Your `gulpfile.js` should contain a task like this-
 
@@ -86,21 +84,41 @@ gulp.task('script', function() {
 });
 ```
 
-As of release v20160822, commonJS imports may be broken: we recommend that you compile a single file only (e.g. via Browserify or other tools), or use ES6 imports.
+## Flags
 
-### Flags
+| Flag                             | Default | Usage |
+|----------------------------------|---------|-------|
+| angularPass | false | Generate $inject properties for AngularJS for functions annotated with @ngInject |
+| assumeFunctionWrapper | false | Enable additional optimizations based on the assumption that the output will be wrapped with a function wrapper. This flag is used to indicate that "global" declarations will not actually be global but instead isolated to the compilation unit. This enables additional optimizations. |
+| checksOnly | false | Don't generate output. Run checks, but no optimization passes. |
+| compilationLevel | SIMPLE | Specifies the compilation level to use.<br /> Options: WHITESPACE_ONLY, SIMPLE, ADVANCED |
+| dartPass | false | |
+| env | BROWSER | Determines the set of builtin externs to load.<br /> Options: BROWSER, CUSTOM |
+| exportLocalPropertyDefinitions | false | |
+| generateExports | false | Generates export code for those marked with @export. |
+| languageIn | ES6 | Sets what language spec that input sources conform to. |
+| languageOut | ES5 | Sets what language spec the output should conform to. |
+| newTypeInf | false | Checks for type errors using the new type inference algorithm. |
+| polymerPass | false | Rewrite Polymer classes to be compiler-friendly. |
+| preserveTypeAnnotations | false | |
+| processCommonJsModules | false | Process CommonJS modules to a concatenable form, i.e., support `require` statements. |
+| renamePrefixNamespace | | Specifies the name of an object that will be used to store all non-extern globals. |
+| rewritePolyfills | false | Rewrite ES6 library calls to use polyfills provided by the compiler's runtime. |
+| useTypesForOptimization | false | Enable or disable the optimizations based on available type information. Inaccurate type annotations may result in incorrect results. |
+| warningLevel | DEFAULT | Specifies the warning level to use.<br /> Options: QUIET, DEFAULT, VERBOSE |
+| jsCode | [] | Specifies the source code to compile. |
+| externs | [] | Additional externs to use for this compile. |
+| createSourceMap | false | Generates a source map mapping the generated source file back to its original sources. |
 
-The Closure Compiler in JS supports many of the flags supported by the Java-based Closure Compiler.
-For now, the supported flags are [listed in source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/gwt/client/GwtRunner.java#L93).
-Specify these flags as `camelCase` format, and not like `camel_case` or `--camel_case`.
+### Languages
 
-Notably, unless you're using a build system, you have to specify code via flags.
-Both `jsCode` and `externs` accept an array containing objects with `src`, `path`, and `sourceMap` properties.
-For those of you familiar with [Closure syntax](https://developers.google.com/closure/compiler/docs/js-for-compiler), that's `Array<{src: string, path: string, sourceMap: string}>`.
+The Closure Compiler supports languages `ECMASCRIPT3`, `ECMASCRIPT5`, `ECMASCRIPT5_STRICT` for input and output, `ECMASCRIPT6`, `ECMASCRIPT6_STRICT` for input only, and `ECMASCRIPT6_TYPED` (experimental) for both.
 
-<!--
-Using `path`, you can construct a virtual filesystem for use with ES6 imports or CommonJS imports (although don't forget to specify `processCommonJsModules: true`).
--->
+### Source Code
+
+Unless you're using the Gulp or Webpack plugins, you'll need to specify code via flags.
+Both `jsCode` and `externs` accept an array containing objects in the form `{src, path, sourceMap}`.
+Using `path`, you can construct a virtual filesystem for use with ES6 or CommonJS imports&mdash;although for CommonJS, be sure to set `processCommonJsModules: true`.
 
 ## License
 

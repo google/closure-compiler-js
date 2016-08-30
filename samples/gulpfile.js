@@ -23,7 +23,7 @@ const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('default', function() {
-  return gulp.src(['helper.js', 'index.js'])
+  return gulp.src(['src/helper.js', 'src/index.js'])
     .pipe(sourcemaps.init())
     .pipe(compiler({
       jsOutputFile: 'output.min.js',  // filename returned to gulp

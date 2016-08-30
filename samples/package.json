@@ -1,0 +1,11 @@
+{
+  "name": "google-closure-compiler-js_samples",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "The Closure Compiler Authors",
+  "private": true,
+  "license": "Apache-2.0",
+  "dependencies": {
+    "google-closure-compiler-js": "latest"
+  }
+}

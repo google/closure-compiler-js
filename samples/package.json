@@ -6,6 +6,7 @@
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
-    "google-closure-compiler-js": "latest"
+    "google-closure-compiler-js": "latest",
+    "gulp-sourcemaps": "^1.6.0"
   }
 }

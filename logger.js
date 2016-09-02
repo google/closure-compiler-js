@@ -42,7 +42,8 @@ function caretPrefix(line, charNo) {
  * @param {function(string)} logger
  * @return {boolean} Whether this output should fail a compilation.
  */
-module.exports = function(options, output, logger=console.warn) {
+module.exports = function(options, output, logger) {
+  logger = logger || console.warn;
   // TODO(samthor): If this file has a sourceMap, then follow it back out of the rabbit hole.
   function fileFor(file) {
     if (!file) { return null; }

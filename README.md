@@ -76,7 +76,6 @@ gulp.task('script', function() {
       .pipe(compiler({
           compilationLevel: 'SIMPLE',
           warningLevel: 'VERBOSE',
-          outputWrapper: '(function(){\n%output%\n}).call(this)',
           jsOutputFile: 'output.min.js',  // outputs single file
           createSourceMap: true,
         }))

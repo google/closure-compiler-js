@@ -1,7 +1,7 @@
 <html>
 <head>
     <!-- need to host the file somewhere -->
-    <script src="/dist/jscomp.js"></script>
+    <script src="../dist/jscomp.js"></script>
 </head> 
     <body>
     <textarea id="src" name="" cols="80" rows="10"></textarea>
@@ -22,9 +22,11 @@ function compile_me(){
 
     var flags = {
         jsCode: [{src: src_code}],
+        env: "CUSTOM",
         compilationLevel: "ADVANCED"
     };
     var out = compile(flags);
+    console.log(out);
     result.innerText = out.compiledCode;
 }
     </script>

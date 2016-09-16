@@ -76,6 +76,7 @@ gulp.task('script', function() {
       .pipe(compiler({
           compilationLevel: 'SIMPLE',
           warningLevel: 'VERBOSE',
+          outputWrapper: '(function(){\n%output%\n}).call(this)',
           jsOutputFile: 'output.min.js',  // outputs single file
           createSourceMap: true,
         }))
@@ -88,16 +89,19 @@ gulp.task('script', function() {
 | Flag                             | Default | Usage |
 |----------------------------------|---------|-------|
 | angularPass | false | Generate $inject properties for AngularJS for functions annotated with @ngInject |
+| applyInputSourceMaps | true | Compose input source maps into output source map |
 | assumeFunctionWrapper | false | Enable additional optimizations based on the assumption that the output will be wrapped with a function wrapper. This flag is used to indicate that "global" declarations will not actually be global but instead isolated to the compilation unit. This enables additional optimizations. |
 | checksOnly | false | Don't generate output. Run checks, but no optimization passes. |
 | compilationLevel | SIMPLE | Specifies the compilation level to use.<br /> Options: WHITESPACE_ONLY, SIMPLE, ADVANCED |
 | dartPass | false | |
+| defines | null | Overrides the value of variables annotated with `@define`, an object mapping names to primitive types |
 | env | BROWSER | Determines the set of builtin externs to load.<br /> Options: BROWSER, CUSTOM |
 | exportLocalPropertyDefinitions | false | |
 | generateExports | false | Generates export code for those marked with @export. |
 | languageIn | ES6 | Sets what language spec that input sources conform to. |
 | languageOut | ES5 | Sets what language spec the output should conform to. |
 | newTypeInf | false | Checks for type errors using the new type inference algorithm. |
+| outputWrapper | null | Interpolate output into this string, replacing the token `%output%` |
 | polymerPass | false | Rewrite Polymer classes to be compiler-friendly. |
 | preserveTypeAnnotations | false | |
 | processCommonJsModules | false | Process CommonJS modules to a concatenable form, i.e., support `require` statements. |

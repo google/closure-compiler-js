@@ -49,13 +49,19 @@ module.exports = function(options, output, logger) {
     if (!file) { return null; }
 
     // Filenames are the same across source and externs, so prefer source files.
-    for (const files of [options.jsCode, options.externs]) {
-      if (!files) { continue; }
+    const inputFiles = [...options.jsCode];
+    if (options.externs) {
+      inputFiles.push(...options.externs);
+    }
 
-      for (const cand of files) {
-        if (cand.path == file) {
-          return cand;
-        }
+    // if path not set and only one input file then return it
+    if (inputFiles.length === 1) {
+      return inputFiles[0];
+    }
+
+    for (const file of inputFiles) {
+      if (cand.path == file) {
+        return cand;
       }
     }
 

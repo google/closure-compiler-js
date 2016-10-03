@@ -21,6 +21,7 @@
 'use strict';
 
 module.exports = {
+  logger: require('./logger.js'),
   compile: require('./compile.js'),
   gulp: require('./lib/gulp'),
   webpack: require('./lib/webpack'),

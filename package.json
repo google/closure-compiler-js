@@ -3,6 +3,9 @@
   "version": "20161201.0.0",
   "description": "Check, compile, transpile, optimize and compress JavaScript with Closure Compiler in JS",
   "main": "index.js",
+  "bin": {
+    "google-closure-compiler-js": "cmd.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/google/closure-compiler-js.git"
@@ -24,7 +27,9 @@
     "ncp": "^2.0.0"
   },
   "dependencies": {
+    "concat-stream": "^1.5.2",
     "gulp-util": "^3.0.7",
+    "minimist": "^1.2.0",
     "webpack-core": "^0.6.8"
   }
 }

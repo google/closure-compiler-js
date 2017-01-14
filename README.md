@@ -32,6 +32,22 @@ const out = compile(flags);
 console.info(out.compiledCode);  // will print 'var x = 3;\n'
 ```
 
+Or to install the command-line version, do:
+
+```bash
+npm install -g google-closure-compiler-js
+```
+
+You should now be able to run `google-closure-compiler-js` as a command.
+The `google-closure-compiler-js` command can read from stdin or from a file.
+For example:
+
+```bash
+google-closure-compiler-js code.js > minified.js
+```
+
+Run `google-closure-compiler-js --help` for full usage information.
+
 ## Build Systems
 
 ### Webpack

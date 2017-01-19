@@ -29,47 +29,54 @@ const minimist = require('minimist');
 const argv = minimist(process.argv.slice(2), {
   alias: { h: 'help', v: 'version' }
 });
-if (argv.help || argv._[0] === 'help') {
+if (argv.help) {
   const helpfile = path.join(__dirname, 'usage.txt');
-  return fs.readFile(helpfile, 'utf8', function (err, src) {
-    if (err) error(err);
-    else console.log(src);
+  return fs.readFile(helpfile, 'utf8', (err, src) => {
+    if (err) {
+      error(err)
+    } else {
+      console.log(src);
+    }
   });
 }
 if (argv.version) {
   return console.log(require('./package.json').version);
 }
 
-var sources = [];
-var infiles = argv._;
+const infiles = argv._;
 delete argv._;
-if (infiles.length === 0) infiles = ['-'];
-var pending = infiles.length;
-infiles.forEach(function (file) {
-  readInput(file, function (err, src) {
-    if (err) return error(err);
-    sources.push(src);
-    if (--pending === 0) ready();
-  });
-});
 
-function readInput (file, cb) {
-  if (file === '-') {
-    process.stdin.pipe(concat({ encoding: 'string' }, function (body) {
-      cb(null, body);
-    }));
-  } else fs.readFile(file, 'utf8', cb);
+// If no files were specified, read from STDIN.
+if (infiles.length === 0) {
+  infiles.push('-');
 }
 
-function ready () {
-  const flags = Object.assign({
-    jsCode: sources.map(function (src) { return { src: src } })
-  }, argv);
+const sources = [];
+infiles.forEach(path => {
+  readFile(path, src => {
+    sources.push(src);
+    if (sources.length === infiles.length) {
+      ready();
+    }
+  })
+});
+
+function readFile(path, cb) {
+  if (path === '-') {
+    process.stdin.pipe(concat({ encoding: 'string' }, src => cb({src})));
+  } else {
+    fs.readFile(path, 'utf8', (err, src) => err ? error(err) : cb({src, path}));
+  }
+}
+
+function ready() {
+  const flags = Object.assign({jsCode: sources}, argv);
+  console.warn('got flags', flags);
   const out = compile(flags);
   console.log(out.compiledCode);
 }
 
-function error (err) {
+function error(err) {
   console.error(err);
   process.exit(1);
 }

@@ -2,7 +2,7 @@ usage: google-closure-compiler-js {OPTIONS} [FILES]
 
 Compile FILES with google-closure-compiler-js.
 
-If FILES is not given, read from stdin ("-").
+If FILES is not given, read from stdin.
 
 OPTIONS are:
 
@@ -40,6 +40,7 @@ OPTIONS are:
   Options: WHITESPACE_ONLY, SIMPLE, ADVANCED
 
 --dartPass (default: false)
+
 --defines (default: null)
 
   Overrides the value of variables annotated with `@define`, an object mapping
@@ -51,6 +52,7 @@ OPTIONS are:
   Options: BROWSER, CUSTOM
 
 --exportLocalPropertyDefinitions (default: false)
+
 --generateExports (default: false)
 
   Generates export code for those marked with @export.

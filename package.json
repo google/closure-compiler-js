@@ -27,7 +27,6 @@
     "ncp": "^2.0.0"
   },
   "dependencies": {
-    "concat-stream": "^1.5.2",
     "gulp-util": "^3.0.7",
     "minimist": "^1.2.0",
     "webpack-core": "^0.6.8"

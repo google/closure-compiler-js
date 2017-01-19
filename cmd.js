@@ -23,9 +23,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const compile = require('./compile.js');
-const concat = require('concat-stream');
 const minimist = require('minimist');
+const compile = require('./compile.js');
+
 const argv = minimist(process.argv.slice(2), {
   alias: { h: 'help', v: 'version' }
 });
@@ -63,7 +63,10 @@ infiles.forEach(path => {
 
 function readFile(path, cb) {
   if (path === '-') {
-    process.stdin.pipe(concat({ encoding: 'string' }, src => cb({src})));
+    let src = '';
+    process.stdin.resume();
+    process.stdin.on('data', buf => src += buf.toString());
+    process.stdin.on('end', () => cb(src));
   } else {
     fs.readFile(path, 'utf8', (err, src) => err ? error(err) : cb({src, path}));
   }
@@ -71,7 +74,6 @@ function readFile(path, cb) {
 
 function ready() {
   const flags = Object.assign({jsCode: sources}, argv);
-  console.warn('got flags', flags);
   const out = compile(flags);
   console.log(out.compiledCode);
 }

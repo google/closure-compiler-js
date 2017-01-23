@@ -140,7 +140,7 @@ Both `jsCode` and `externs` accept an array containing objects in the form `{src
 Using `path`, you can construct a virtual filesystem for use with ES6 or CommonJS imports&mdash;although for CommonJS, be sure to set `processCommonJsModules: true`.
 
 ## Transpilation
-The Javascript version of the Closure-Compiler is a transpiled by GWT from the Java source.  For more details on the differences in behavior see the [super sourced files](https://github.com/google/closure-compiler/tree/master/src/com/google/javascript/jscomp/gwt/super) in the main repo. 
+The Javascript version of the Closure-Compiler is transpiled by GWT from the Java source.  For more details on the differences in behavior see the [super sourced files](https://github.com/google/closure-compiler/tree/master/src/com/google/javascript/jscomp/gwt/super) in the main repo. 
 
 ## License
 

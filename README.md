@@ -8,7 +8,7 @@ Any bugs not related to the plugins themselves should be reported to the [main r
 Unlike other packages, this allows Closure Compiler to run entirely in JS.
 *Java is not required.*
 
-This is an experimental release- some features are not available and performance may not be on-par with the Java implementation. [Details Here](## Transpilation)
+This is an experimental release- some features are not available and performance may not be on-par with the Java implementation. [Details Here](##Transpilation)
 
 ## Usage
 

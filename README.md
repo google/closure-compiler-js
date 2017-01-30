@@ -144,7 +144,7 @@ The Javascript version of the Closure-Compiler is transpiled by GWT from the Jav
 
 ## License
 
-Copyright 2016 The Closure Compiler Authors
+Copyright 2017 The Closure Compiler Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

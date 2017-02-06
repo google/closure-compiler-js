@@ -27,8 +27,8 @@
     "ncp": "^2.0.0"
   },
   "dependencies": {
-    "gulp-util": "^3.0.7",
     "minimist": "^1.2.0",
+    "vinyl": "^2.0.1",
     "webpack-core": "^0.6.8"
   }
 }

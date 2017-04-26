@@ -25,9 +25,10 @@ const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
 const compile = require('./compile.js');
+const logger = require('./logger.js');
 
 const argv = minimist(process.argv.slice(2), {
-  alias: { h: 'help', v: 'version' }
+  alias: {h: 'help', v: 'version'},
 });
 if (argv.help) {
   const helpfile = path.join(__dirname, 'usage.txt');
@@ -48,7 +49,7 @@ delete argv._;
 
 // If no files were specified, read from STDIN.
 if (infiles.length === 0) {
-  infiles.push('-');
+  infiles.push(false);
 }
 
 const sources = [];
@@ -62,11 +63,11 @@ infiles.forEach(path => {
 });
 
 function readFile(path, cb) {
-  if (path === '-') {
+  if (path === false) {
     let src = '';
     process.stdin.resume();
     process.stdin.on('data', buf => src += buf.toString());
-    process.stdin.on('end', () => cb({src, path: '-'}));
+    process.stdin.on('end', () => cb({src}));
   } else {
     fs.readFile(path, 'utf8', (err, src) => err ? error(err) : cb({src, path}));
   }
@@ -74,8 +75,15 @@ function readFile(path, cb) {
 
 function ready() {
   const flags = Object.assign({jsCode: sources}, argv);
-  const out = compile(flags);
-  console.log(out.compiledCode);
+  const output = compile(flags);
+
+  let code = 0;
+  if (logger(flags, output)) {
+    code = 1;
+  }
+  console.log(output.compiledCode);
+
+  process.exit(code);
 }
 
 function error(err) {

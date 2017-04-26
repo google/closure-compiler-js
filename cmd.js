@@ -67,7 +67,7 @@ function readFile(path, cb) {
     let src = '';
     process.stdin.resume();
     process.stdin.on('data', buf => src += buf.toString());
-    process.stdin.on('end', () => cb({src}));
+    process.stdin.on('end', () => cb({src, path: '-'}));
   } else {
     fs.readFile(path, 'utf8', (err, src) => err ? error(err) : cb({src, path}));
   }

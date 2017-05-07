@@ -73,7 +73,7 @@ module.exports = {
         languageOut: 'ECMASCRIPT5',
         compilationLevel: 'ADVANCED',
         warningLevel: 'VERBOSE',
-      },
+      }
     })
   ]
 };

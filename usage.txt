@@ -2,7 +2,7 @@ usage: google-closure-compiler-js {OPTIONS} [FILES]
 
 Compile FILES with google-closure-compiler-js.
 
-If FILES is not given, read from stdin.
+If FILES or --jsCode is not given, read from stdin.
 
 OPTIONS are:
 
@@ -53,9 +53,17 @@ OPTIONS are:
 
 --exportLocalPropertyDefinitions (default: false)
 
+--externs
+
+  Additional paths to externs to use for this compile.
+
 --generateExports (default: false)
 
   Generates export code for those marked with @export.
+
+--jsCode
+
+  Specifies the paths to source code to compile.
 
 --languageIn (default: ES6)
 
@@ -73,9 +81,9 @@ OPTIONS are:
 
   Interpolate output into this string, replacing the token `%output%`
 
---polymerPass (default: false)
+--polymerVersion (default: null)
 
-  Rewrite Polymer classes to be compiler-friendly.
+  Specify the Polymer version pass to use.
 
 --preserveTypeAnnotations (default: false)
 
@@ -101,10 +109,6 @@ OPTIONS are:
 
   Specifies the warning level to use.
   Options: QUIET, DEFAULT, VERBOSE
-
---externs
-
-  Additional externs to use for this compile.
 
 --createSourceMap (default: false)
 

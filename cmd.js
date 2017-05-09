@@ -44,37 +44,66 @@ if (argv.version) {
   return console.log(require('./package.json').version);
 }
 
-const infiles = argv._;
-delete argv._;
-
-// If no files were specified, read from STDIN.
+const infiles = argv._.concat(toArray(argv.jsCode));  // treat jsCode as _
 if (infiles.length === 0) {
-  infiles.push(false);
+  infiles.push(null);  // if no files were specified, read from stdin
 }
+const sources = readAllFiles(infiles);
+delete argv._;
+delete argv.jsCode;
 
-const sources = [];
-infiles.forEach(path => {
-  readFile(path, src => {
-    sources.push(src);
-    if (sources.length === infiles.length) {
-      ready();
-    }
-  })
-});
+const externs = readAllFiles(toArray(argv.externs));
+delete argv.externs;
 
-function readFile(path, cb) {
-  if (path === false) {
-    let src = '';
-    process.stdin.resume();
-    process.stdin.on('data', buf => src += buf.toString());
-    process.stdin.on('end', () => cb({src, path: '-'}));
+Promise.all([sources, externs]).then(arr => ready(...arr)).catch(error);
+
+/**
+ * Minimist gives us a string, array or null: normalize to array.
+ *
+ * @param {(string|Array<string>)}
+ * @return {!Array<string>}
+ */
+function toArray(arg) {
+  if (typeof arg === 'string') {
+    return [arg];
+  } else if (arg) {
+    return arg;
   } else {
-    fs.readFile(path, 'utf8', (err, src) => err ? error(err) : cb({src, path}));
+    return [];
   }
 }
 
-function ready() {
-  const flags = Object.assign({jsCode: sources}, argv);
+/**
+ * @param {!Array<string>} paths
+ * @return {!Promise<!Array{src: string, path: string}>>}
+ */
+function readAllFiles(paths) {
+  return Promise.all(paths.map(path => readFile(path)));
+}
+
+/**
+ * @param {?string} path
+ * @return {!Promise<{src: string, path: string}>}
+ */
+function readFile(path) {
+  return new Promise((resolve, reject) => {
+    if (path === null) {
+      let src = '';
+      process.stdin.resume();
+      process.stdin.on('data', buf => src += buf.toString());
+      process.stdin.on('end', () => resolve({src, path: '-'}));
+    } else {
+      fs.readFile(path, 'utf8', (err, src) => err ? reject(err) : resolve({src, path}));
+    }
+  });
+}
+
+/**
+ * @param {!Array<{src: string, path: string}>} sources
+ * @param {!Array<{src: string, path: string}>} externs
+ */
+function ready(sources, externs) {
+  const flags = Object.assign(Object.assign({}, argv), {jsCode: sources, externs: externs});
   const output = compile(flags);
 
   let code = 0;

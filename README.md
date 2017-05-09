@@ -118,7 +118,7 @@ gulp.task('script', function() {
 | languageOut | ES5 | Sets what language spec the output should conform to. |
 | newTypeInf | false | Checks for type errors using the new type inference algorithm. |
 | outputWrapper | null | Interpolate output into this string, replacing the token `%output%` |
-| polymerPass | false | Rewrite Polymer classes to be compiler-friendly. |
+| polymerVersion | null | Specify the Polymer version pass to use. |
 | preserveTypeAnnotations | false | |
 | processCommonJsModules | false | Process CommonJS modules to a concatenable form, i.e., support `require` statements. |
 | renamePrefixNamespace | | Specifies the name of an object that will be used to store all non-extern globals. |

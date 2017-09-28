@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
+/**
+ * @fileoverview Builds the Closure Compiler using Maven.
+ */
+
 'use strict';
 
 const spawn = require('child_process').spawnSync;
@@ -23,20 +27,21 @@ const ncp = require('ncp');
 const moduleName = 'com.google.javascript:closure-compiler-gwt';
 const compilerBuild = spawn('mvn', ['-DskipTests', '-pl', moduleName], {
   cwd: './closure-compiler',
-  stdio: 'inherit'
+  stdio: 'inherit',
 });
 
 if (compilerBuild.status !== 0) {
   throw new Error('compiler build failed');
 }
 
+const pathsToCopy = ['contrib'];
 const targetPath = './closure-compiler/target/closure-compiler-gwt-1.0-SNAPSHOT/jscomp/jscomp.js';
-ncp(targetPath, './jscomp.js', err => {
+ncp(targetPath, './jscomp.js', (err) => {
   if (err) {
     throw new Error(err);
   }
-  ['contrib'].forEach(name => {
-    ncp('./closure-compiler/' + name, './' + name, function(err) {
+  pathsToCopy.forEach((p) => {
+    ncp('./closure-compiler/' + p, './' + p, function(err) {
       if (err) {
         throw new Error(err);
       }

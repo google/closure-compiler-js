@@ -20,7 +20,7 @@
 
 'use strict';
 
-const helperModule = require('./helper');
+const helperModule = require('./helper.js');
 
 let authors = 'The Closure Compiler Authors';
 console.info(`I'm a test module by ${authors}.`);

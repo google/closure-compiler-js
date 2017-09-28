@@ -1,5 +1,7 @@
 # closure-compiler-js
 
+<img src="https://travis-ci.org/google/closure-compiler-js.svg?branch=master" />
+
 Check, compile, transpile, optimize and compress JavaScript with Closure Compiler in JS.
 
 This repo tracks issues related to the publication to npmjs.org and associated plugins.
@@ -8,13 +10,14 @@ Any bugs not related to the plugins themselves should be reported to the [main r
 Unlike other packages, this allows Closure Compiler to run entirely in JS.
 *Java is not required.*
 
-This is an experimental release - meaning some features are not available and performance may not be on-par with the Java implementation. [Details Here](#transpilation)
+This is an experimental release - meaning some features are not available and performance may not be on-par with the Java implementation - [details here](#transpilation).
 
 ## Usage
 
 First, install the latest version:
 
 ```bash
+yarn add google-closure-compiler-js  # or
 npm install --save google-closure-compiler-js
 ```
 
@@ -132,9 +135,10 @@ gulp.task('script', function() {
 ### Languages
 
 The Closure Compiler supports the following languages:
-- `ECMASCRIPT3`, `ECMASCRIPT5` and `ECMASCRIPT5_STRICT` for input and output;
-- `ECMASCRIPT6` and `ECMASCRIPT6_STRICT` for input only;
--  `ECMASCRIPT6_TYPED` (experimental) for both.
+- `ECMASCRIPT3`, `ECMASCRIPT5` and `ECMASCRIPT5_STRICT`
+- `ECMASCRIPT6` and `ECMASCRIPT6_STRICT`
+- `ECMASCRIPT6_TYPED` (experimental)
+- `ECMASCRIPT_2017` (experimental)
 
 ### Source Code
 
@@ -143,7 +147,11 @@ Unless you're using Gulp's or Webpack's plugins, you'll need to specify code via
 - Using `path` you can construct a virtual filesystem for use with ES6 or CommonJS imports &mdash; although for CommonJS you'll have to set `processCommonJsModules: true`.
 
 ## Transpilation
-The JavaScript version of the Closure-Compiler is transpiled by GWT from the Java source.  For more details on the differences in behavior see the [super sourced files](https://github.com/google/closure-compiler/tree/master/src/com/google/javascript/jscomp/gwt/super) in the main repo. 
+The JavaScript version of the Closure-Compiler is transpiled by GWT from the Java source.
+For more details on the differences in behavior see the [super sourced files][1] in the main
+repository.
+
+[1]: https://github.com/google/closure-compiler/tree/master/src/com/google/javascript/jscomp/gwt/super
 
 ## Version History
 

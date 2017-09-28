@@ -33,21 +33,6 @@ suite('closure', () => {
     assertCompileOk(out, 'var x=3;')
   });
 
-  test('ES7 out', () => {
-    const flags = {
-      jsCode: [{
-        src: 'console.log(`foo`)',
-        path: 'foo.js',
-      }],
-      languageIn: 'ECMASCRIPT_2017',
-      languageOut: 'ECMASCRIPT_2017',
-      compilationLevel: 'ADVANCED',
-      warningLevel: 'VERBOSE',
-    };
-    const out = compile(flags);
-    assertCompileOk(out, '\'use strict\';console.log("foo");')
-  });
-
   test('advanced', () => {
     const flags = {
       jsCode: [{
@@ -67,6 +52,21 @@ suite('closure', () => {
         'advanced code should be smaller');
     assertCompileOk(advanced, 'console.info(1);', 'advanced code was incorrect');
     assertCompileOk(simple, 'var x=1;console.info(1);', 'simple code was incorrect');
+  });
+
+  test('ES7 out', () => {
+    const flags = {
+      jsCode: [{
+        src: 'console.log(`foo`)',
+        path: 'foo.js',
+      }],
+      languageIn: 'ECMASCRIPT_2017',
+      languageOut: 'ECMASCRIPT_2017',
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+    };
+    const out = compile(flags);
+    assertCompileOk(out, '\'use strict\';console.log("foo");')
   });
 
 });

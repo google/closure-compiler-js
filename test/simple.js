@@ -1,6 +1,5 @@
-#!/usr/bin/env node
 /*
- * Copyright 2016 The Closure Compiler Authors.
+ * Copyright 2017 The Closure Compiler Authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,30 +14,59 @@
  * limitations under the License.
  */
 
-/**
- * @fileoverview Simple sanity check to run after jscomp.js has been built.
- */
+const compile = require('../compile.js');
+const assert = require('chai').assert;
 
-'use strict';
+suite('closure', () => {
+  function assertCompileOk(out, expected, opt_message) {
+    assert.equal(out.compiledCode, expected, opt_message);
+    assert.sameOrderedMembers(out.warnings, [], 'expected zero warnings');
+    assert.sameOrderedMembers(out.errors, [], 'expected zero errors');
+  }
 
-const compile = require('../index.js').compile;
+  test('simple', () => {
+    const flags = {
+      jsCode: [{src: 'const x = 1 + 2;'}],
+      warningLevel: 'VERBOSE',
+    };
+    const out = compile(flags);
+    assertCompileOk(out, 'var x=3;')
+  });
 
-const flags = {
-  jsCode: [{src: 'const x = 1 + 2;'}],
-  warningLevel: 'VERBOSE',
-};
-const out = compile(flags);
+  test('ES7 out', () => {
+    const flags = {
+      jsCode: [{
+        src: 'console.log(`foo`)',
+        path: 'foo.js',
+      }],
+      languageIn: 'ECMASCRIPT_2017',
+      languageOut: 'ECMASCRIPT_2017',
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+    };
+    const out = compile(flags);
+    assertCompileOk(out, '\'use strict\';console.log("foo");')
+  });
 
-const expected = 'var x=3;';
-if (out.compiledCode !== expected) {
-  console.error(`expected: "${expected}", was: "${out.compiledCode}"`);
-  throw new Error('test failed');
-}
+  test('advanced', () => {
+    const flags = {
+      jsCode: [{
+        src: 'var x = 1;\nif (x)\nconsole.info(1);',
+        path: 'foo.js',
+      }],
+      warningLevel: 'VERBOSE',
+    };
 
-if (out.warnings.length || out.errors.length) {
-  console.error(`expected zero warnings/errors, got: ${out.warnings} ${out.errors}`);
-  throw new Error('test failed');
-}
+    flags.compilationLevel = 'ADVANCED';
+    const advanced = compile(flags);
 
-console.info('Ok! 👍');
+    flags.compilationLevel = 'SIMPLE';
+    const simple = compile(flags);
 
+    assert.isBelow(advanced.compiledCode.length, simple.compiledCode.length,
+        'advanced code should be smaller');
+    assertCompileOk(advanced, 'console.info(1);', 'advanced code was incorrect');
+    assertCompileOk(simple, 'var x=1;console.info(1);', 'simple code was incorrect');
+  });
+
+});

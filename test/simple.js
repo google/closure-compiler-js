@@ -19,9 +19,9 @@ const assert = require('chai').assert;
 
 suite('closure', () => {
   function assertCompileOk(out, expected, opt_message) {
-    assert.equal(out.compiledCode, expected, opt_message);
     assert.sameOrderedMembers(out.warnings, [], 'expected zero warnings');
     assert.sameOrderedMembers(out.errors, [], 'expected zero errors');
+    assert.equal(out.compiledCode, expected, opt_message);
   }
 
   test('simple', () => {
@@ -52,6 +52,23 @@ suite('closure', () => {
         'advanced code should be smaller');
     assertCompileOk(advanced, 'console.info(1);', 'advanced code was incorrect');
     assertCompileOk(simple, 'var x=1;console.info(1);', 'simple code was incorrect');
+  });
+
+  test('require()', () => {
+    const flags = {
+      jsCode: [{
+        src: 'module.exports = () => { console.info(`Hello!`); };',
+        path: 'src/hello.js',
+      }, {
+        src: '\'use strict\';\nconst x = require(\'./hello.js\');\nx();',
+        path: 'src/index.js',
+      }],
+      processCommonJsModules: true,
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+    };
+    const out = compile(flags);
+    assertCompileOk(out, 'console.info("Hello!");');
   });
 
   test('ES7 out', () => {

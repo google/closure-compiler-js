@@ -34,6 +34,7 @@
     "webpack-core": "^0.6.8"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "pretest": "./build_compiler.js"
   }
 }

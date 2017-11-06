@@ -71,7 +71,8 @@ suite('closure', () => {
     assertCompileOk(out, 'console.info("Hello!");');
   });
 
-  test('ES7 out', () => {
+  // Disabled until there is a fix for https://github.com/google/closure-compiler-js/issues/77
+  test.skip('ES7 out', () => {
     const flags = {
       jsCode: [{
         src: 'console.log(`foo`)',

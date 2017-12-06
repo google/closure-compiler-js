@@ -25,10 +25,11 @@ const spawn = require('child_process').spawnSync;
 const ncp = require('ncp');
 
 const moduleName = 'com.google.javascript:closure-compiler-gwt';
-const compilerBuild = spawn('mvn', ['-DskipTests', '-pl', moduleName], {
-  cwd: './closure-compiler',
-  stdio: 'inherit',
-});
+const compilerBuild = spawn(
+    'mvn', ['-DskipTests', '--projects', moduleName, 'clean', 'install'], {
+      cwd: './closure-compiler',
+      stdio: 'inherit',
+    });
 
 if (compilerBuild.status !== 0) {
   throw new Error('compiler build failed');

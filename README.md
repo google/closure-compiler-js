@@ -125,7 +125,7 @@ gulp.task('script', function() {
 | preserveTypeAnnotations | false | |
 | processCommonJsModules | false | Process CommonJS modules to a concatenable form, i.e., support `require` statements. |
 | renamePrefixNamespace | | Specifies the name of an object that will be used to store all non-extern globals. |
-| rewritePolyfills | false | Rewrite ES6 library calls to use polyfills provided by the compiler's runtime. |
+| rewritePolyfills | true | Rewrite ES6 library calls to use polyfills provided by the compiler's runtime. |
 | useTypesForOptimization | false | Enable or disable the optimizations based on available type information. Inaccurate type annotations may result in incorrect results. |
 | warningLevel | DEFAULT | Specifies the warning level to use.<br /> Options: QUIET, DEFAULT, VERBOSE |
 | jsCode | [] | Specifies the source code to compile. |

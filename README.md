@@ -17,8 +17,8 @@ This is an experimental release - meaning some features are not available and pe
 First, install the latest version:
 
 ```bash
-yarn add google-closure-compiler-js  # or
-npm install --save google-closure-compiler-js
+yarn add google-closure-compiler-js --dev  # or
+npm install --save-dev google-closure-compiler-js
 ```
 
 The module supports modern web browsers as well as Node v4 LTS, and provides `compile` as a low-level method to compile JavaScript.

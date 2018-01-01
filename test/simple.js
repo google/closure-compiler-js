@@ -30,7 +30,21 @@ suite('closure', () => {
       warningLevel: 'VERBOSE',
     };
     const out = compile(flags);
-    assertCompileOk(out, 'var x=3;')
+
+    assertCompileOk(out, 'var x=3;');
+    assert.equal(out.sourceMap, null);
+  });
+
+  test('simple with source map', () => {
+    const flags = {
+      jsCode: [{src: 'const x = 1 + 2;'}],
+      warningLevel: 'VERBOSE',
+      createSourceMap: true,
+    };
+    const out = compile(flags);
+
+    assertCompileOk(out, 'var x=3;');
+    assert.equal(out.sourceMap, `{\n"version":3,\n"file":"",\n"lineCount":1,\n"mappings":"AAAA,IAAMA,EAAI;",\n"sources":["Input_0"],\n"names":["x"]\n}\n`);
   });
 
   test('advanced', () => {

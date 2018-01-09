@@ -86,4 +86,32 @@ suite('closure', () => {
     assertCompileOk(out, '\'use strict\';console.log("foo");')
   });
 
+  test('fixup string defines', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var foo = false; console.log(foo)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+      defines: 'foo=true'
+    };
+    const out = compile(flags);
+    assertCompileOk(out, 'console.log(true);')
+  });
+
+  test('fixup array defines', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var foo = false; console.log(foo)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+      defines: ['foo=true']
+    };
+    const out = compile(flags);
+    assertCompileOk(out, 'console.log(true);')
+  });
+
 });

@@ -93,7 +93,7 @@ suite('closure', () => {
         path: 'foo.js',
       }],
       compilationLevel: 'ADVANCED',
-      warningLevel: 'VERBOSE',
+      // warningLevel: 'VERBOSE',
       defines: 'foo=true'
     };
     const out = compile(flags);
@@ -107,11 +107,24 @@ suite('closure', () => {
         path: 'foo.js',
       }],
       compilationLevel: 'ADVANCED',
-      warningLevel: 'VERBOSE',
+      // warningLevel: 'VERBOSE',
       defines: ['foo=true']
     };
     const out = compile(flags);
     assertCompileOk(out, 'console.log(true);')
   });
 
+  test('fixup array defines with multiple values', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var bool = false; /** @define {number} */ var num = 0; /** @define {string} */ var str = "hello"; console.log(bool, num, str)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      // warningLevel: 'VERBOSE',
+      defines: ['bool=true', 'num=1', 'str="bye"']
+    };
+    const out = compile(flags);
+    assertCompileOk(out, 'console.log(true, 1, "bye");')
+  });
 });

@@ -15,6 +15,7 @@
  */
 
 const compile = require('../compile.js');
+const cmdCompile = require('../cmd.js');
 const assert = require('chai').assert;
 
 suite('closure', () => {
@@ -86,4 +87,45 @@ suite('closure', () => {
     assertCompileOk(out, '\'use strict\';console.log("foo");')
   });
 
+  test('parse string defines on command line', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var foo = false; console.log(foo)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+      defines: 'foo=true'
+    };
+    const out = cmdCompile(flags);
+    assertCompileOk(out, 'console.log(!0);')
+  });
+
+  test('parse array defines on command line', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var foo = false; console.log(foo)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+      defines: ['foo=true']
+    };
+    const out = cmdCompile(flags);
+    assertCompileOk(out, 'console.log(!0);')
+  });
+
+  test('parse array defines with multiple values', () => {
+    const flags = {
+      jsCode: [{
+        src: '/** @define {boolean} */ var bool = false; /** @define {number} */ var num = 0; /** @define {string} */ var str = "hello"; console.log(bool, num, str)',
+        path: 'foo.js',
+      }],
+      compilationLevel: 'ADVANCED',
+      warningLevel: 'VERBOSE',
+      defines: ['bool=true', 'num=1', 'str="bye"']
+    };
+    const out = cmdCompile(flags);
+    assertCompileOk(out, 'console.log(!0,1,\'"bye"\');')
+  });
 });

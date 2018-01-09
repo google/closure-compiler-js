@@ -98,14 +98,49 @@ function readFile(path) {
   });
 }
 
+function parseDefines(flags){
+ /**
+   * compile() expects 'defines' to be object, but minimist may only return array or string
+   * so, we need to convert to proper object.
+   * The supported format will be similar to the following,
+   * https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#define-type-description
+   * but instead of using --define 'name=value' we should support --defines 'name=value'
+   */
+
+  if (Array.isArray(flags.defines) || typeof flags.defines === "string"){
+    let defines = {};
+    function parseDefines(d) {
+      let [key, value] = d.split("=");
+      defines[key] =
+       /^(?:true|false)$/.test(value)
+        ? value === 'true' 
+        : !isNaN(parseFloat(value)) && isFinite(value)
+          ? parseFloat(value)
+          : value;
+    }
+    if (Array.isArray(flags.defines)) {
+      flags.defines.forEach(parseDefines);
+    } else {
+      parseDefines(flags.defines);
+    }
+    flags.defines = defines;
+  }
+}
+
+function cmdCompile(flags) {
+  parseDefines(flags);
+  return compile(flags);
+}
+//Mostly for test purpuses.
+module.exports = cmdCompile;
+
 /**
  * @param {!Array<{src: string, path: string}>} sources
  * @param {!Array<{src: string, path: string}>} externs
  */
 function ready(sources, externs) {
   const flags = Object.assign(Object.assign({}, argv), {jsCode: sources, externs: externs});
-  const output = compile(flags);
-
+  const output = cmdCompile(flags);
   let code = 0;
   if (logger(flags, output)) {
     code = 1;

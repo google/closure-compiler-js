@@ -98,7 +98,7 @@ suite('closure', () => {
       defines: 'foo=true'
     };
     const out = cmdCompile(flags);
-    assertCompileOk(out, 'console.log(true);')
+    assertCompileOk(out, 'console.log(!0);')
   });
 
   test('parse array defines on command line', () => {
@@ -112,7 +112,7 @@ suite('closure', () => {
       defines: ['foo=true']
     };
     const out = cmdCompile(flags);
-    assertCompileOk(out, 'console.log(true);')
+    assertCompileOk(out, 'console.log(!0);')
   });
 
   test('parse array defines with multiple values', () => {
@@ -126,6 +126,6 @@ suite('closure', () => {
       defines: ['bool=true', 'num=1', 'str="bye"']
     };
     const out = cmdCompile(flags);
-    assertCompileOk(out, 'console.log(true, 1, "bye");')
+    assertCompileOk(out, 'console.log(!0, 1, "bye");')
   });
 });

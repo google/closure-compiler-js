@@ -140,7 +140,7 @@ module.exports = cmdCompile;
  */
 function ready(sources, externs) {
   const flags = Object.assign(Object.assign({}, argv), {jsCode: sources, externs: externs});
-  cmdCompile(flags);
+  const output = cmdCompile(flags);
   let code = 0;
   if (logger(flags, output)) {
     code = 1;

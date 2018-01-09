@@ -126,6 +126,6 @@ suite('closure', () => {
       defines: ['bool=true', 'num=1', 'str="bye"']
     };
     const out = cmdCompile(flags);
-    assertCompileOk(out, 'console.log(!0, 1, "bye");')
+    assertCompileOk(out, 'console.log(!0,1,\'"bye"\');')
   });
 });

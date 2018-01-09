@@ -98,7 +98,7 @@ function readFile(path) {
   });
 }
 
-function fixupDefines(flags){
+function parseDefines(flags){
  /**
    * compile() expects 'defines' to be object, but minimist may only return array or string
    * so, we need to convert to proper object.
@@ -127,15 +127,20 @@ function fixupDefines(flags){
   }
 }
 
+function cmdCompile(flags) {
+  parseDefines(flags);
+  return compile(flags);
+}
+//Mostly for test purpuses.
+module.exports = cmdCompile;
+
 /**
  * @param {!Array<{src: string, path: string}>} sources
  * @param {!Array<{src: string, path: string}>} externs
  */
 function ready(sources, externs) {
   const flags = Object.assign(Object.assign({}, argv), {jsCode: sources, externs: externs});
-  fixupDefines(flags);
-  const output = compile(flags);
-
+  cmdCompile(flags);
   let code = 0;
   if (logger(flags, output)) {
     code = 1;

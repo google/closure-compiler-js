@@ -26,7 +26,7 @@ const ncp = require('ncp');
 
 const moduleName = 'com.google.javascript:closure-compiler-gwt';
 const compilerBuild = spawn(
-    'mvn', ['-DskipTests', '--projects', moduleName, 'clean', 'install'], {
+    'mvn', ['-f', 'pom-gwt.xml', '-DskipTests', '--projects', moduleName, 'clean', 'install'], {
       cwd: './closure-compiler',
       stdio: 'inherit',
     });

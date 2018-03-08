@@ -55,7 +55,7 @@ delete argv.jsCode;
 const externs = readAllFiles(toArray(argv.externs));
 delete argv.externs;
 
-Promise.all([sources, externs]).then(arr => ready(...arr)).catch(error);
+Promise.all([sources, externs]).then(arr => ready(arr[0], arr[1])).catch(error);
 
 /**
  * Minimist gives us a string, array or null: normalize to array.
@@ -110,7 +110,12 @@ function parseDefines(flags){
   if (Array.isArray(flags.defines) || typeof flags.defines === "string"){
     let defines = {};
     function parseDefines(d) {
-      let [key, value] = d.split("=");
+      let key, value;
+      {
+        let a = d.split("=");
+        key = a[0];
+        value = a[1];
+      }
       defines[key] =
        /^(?:true|false)$/.test(value)
         ? value === 'true' 

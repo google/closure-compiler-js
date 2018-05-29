@@ -1,6 +1,6 @@
 # closure-compiler-js
 
-<img src="https://travis-ci.org/google/closure-compiler-js.svg?branch=master" />
+[![Build Status](https://travis-ci.org/google/closure-compiler-js.svg?branch=master)](https://travis-ci.org/google/closure-compiler-js)
 
 Check, compile, transpile, optimize and compress JavaScript with Closure Compiler in JS.
 

@@ -49,17 +49,39 @@ module.exports = function(options, output, logger) {
     if (!file) { return null; }
 
     // Filenames are the same across source and externs, so prefer source files.
-    for (const files of [options.jsCode, options.externs]) {
-      if (!files) { continue; }
+    const inputFiles = [...options.jsCode];
+    if (options.externs) {
+      inputFiles.push(...options.externs);
+    }
 
-      for (const cand of files) {
-        if (cand.path == file) {
-          return cand;
-        }
+    // if path not set and only one input file then return it
+    if (inputFiles.length === 1) {
+      return inputFiles[0];
+    }
+
+    for (const file of inputFiles) {
+      if (cand.path == file) {
+        return cand;
       }
     }
 
     return null;
+  }
+
+  function writeCodeContext(lineIndex, lines, before=true) {
+    const maxContextLines = 4;
+    let index = before ? lineIndex - maxContextLines : lineIndex + 1;
+    if (index < 0) {
+      return;
+    }
+    let printedLine = 0;
+    for (index; index < lines.length; ++index) {
+      logger(lines[index] || '');
+      printedLine++;
+      if (printedLine === maxContextLines) {
+        return;
+      }
+    }
   }
 
   function writemsg(color, msg) {
@@ -73,9 +95,16 @@ module.exports = function(options, output, logger) {
     const file = fileFor(msg.file);
     if (file) {
       const lines = file.src.split('\n');  // TODO(samthor): cache this for logger?
-      const line = lines[msg.lineNo - 1] || '';
+      const lineIndex = msg.lineNo - 1;
+
+      // before guilty line
+      writeCodeContext(lineIndex, lines);
+      // guilty line
+      const line = lines[lineIndex] || '';
       logger(color + line + COLOR_END);
       logger(COLOR_GREEN + caretPrefix(line, msg.charNo) + '^' + COLOR_END);
+      // after guilty line
+      writeCodeContext(lineIndex, lines, false);
     }
     logger('');
   }

@@ -152,6 +152,11 @@ function ready(sources, externs) {
   }
   console.log(output.compiledCode);
 
+  if (flags.createSourceMap) {
+    const sourceMapBase64 = new Buffer(output.sourceMap).toString('base64');
+    console.log('//# sourceMappingURL=data:application/json;charset=utf-8;base64,' + sourceMapBase64);
+  }
+
   process.exit(code);
 }
 

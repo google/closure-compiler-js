@@ -1,6 +1,8 @@
 # closure-compiler-js
 
-[![Build Status](https://travis-ci.org/google/closure-compiler-js.svg?branch=master)](https://travis-ci.org/google/closure-compiler-js)
+**Note**: The JS version of Closure-Compiler is being moved to the main npm distribution at https://www.npmjs.com/package/google-closure-compiler. Build plugins for `grunt` and `gulp` are already fully supported in that distribution.
+
+<hr />
 
 Check, compile, transpile, optimize and compress JavaScript with Closure Compiler in JS.
 

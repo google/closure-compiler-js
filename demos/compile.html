@@ -1,0 +1,33 @@
+<html>
+<head>
+    <!-- need to host the file somewhere -->
+    <script src="../dist/jscomp.js"></script>
+</head> 
+    <body>
+    <textarea id="src" name="" cols="80" rows="10"></textarea>
+    <div>
+    <button id="compile" onclick="compile_me()">
+        compile
+    </button>
+    </div>
+    <div id="result" style="border: solid gray;">
+        // the compilation will appear here
+    </div>
+    </body>
+    <script>
+function compile_me(){
+    var result = document.getElementById('result');
+    result.innerText = "//compiling...";
+    var src_code = document.getElementById("src").value;
+
+    var flags = {
+        jsCode: [{src: src_code}],
+        env: "CUSTOM",
+        compilationLevel: "ADVANCED"
+    };
+    var out = compile(flags);
+    console.log(out);
+    result.innerText = out.compiledCode;
+}
+    </script>
+</html>

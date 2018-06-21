@@ -62,6 +62,22 @@ module.exports = function(options, output, logger) {
     return null;
   }
 
+  function writeCodeContext(lineIndex, lines, before=true) {
+    const maxContextLines = 4;
+    let index = before ? lineIndex - maxContextLines : lineIndex + 1;
+    if (index < 0) {
+      return;
+    }
+    let printedLine = 0;
+    for (index; index < lines.length; ++index) {
+      logger(lines[index] || '');
+      printedLine++;
+      if (printedLine === maxContextLines) {
+        return;
+      }
+    }
+  }
+
   function writemsg(color, msg) {
     if (!msg.file && msg.lineNo < 0) {
       logger(msg.type);
@@ -73,9 +89,16 @@ module.exports = function(options, output, logger) {
     const file = fileFor(msg.file);
     if (file) {
       const lines = file.src.split('\n');  // TODO(samthor): cache this for logger?
-      const line = lines[msg.lineNo - 1] || '';
+      const lineIndex = msg.lineNo - 1;
+
+      // before guilty line
+      writeCodeContext(lineIndex, lines);
+      // guilty line
+      const line = lines[lineIndex] || '';
       logger(color + line + COLOR_END);
       logger(COLOR_GREEN + caretPrefix(line, msg.charNo) + '^' + COLOR_END);
+      // after guilty line
+      writeCodeContext(lineIndex, lines, false);
     }
     logger('');
   }

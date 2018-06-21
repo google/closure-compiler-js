@@ -153,6 +153,21 @@ repository.
 
 [1]: https://github.com/google/closure-compiler/tree/master/src/com/google/javascript/jscomp/gwt/super
 
+For building it, first init and update the `closure-compiler` git submodule:
+
+```bash
+git submodule init closure-compiler
+git submodule update
+```
+
+Then and add the `allow-snapshots` section to `~/.m2/settings.xml` like in [here](https://github.com/google/closure-compiler#building-it-yourself).
+
+After that you can finally build the GWT port:
+
+```bash
+./build_compiler.js
+```
+
 ## Version History
 
 Closure Compiler release notes can be found on the

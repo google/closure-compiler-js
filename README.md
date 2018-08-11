@@ -1,6 +1,7 @@
 # closure-compiler-js
 
-**Note**: The JS version of Closure-Compiler is being moved to the main npm distribution at https://www.npmjs.com/package/google-closure-compiler. Build plugins for `grunt` and `gulp` are already fully supported in that distribution.
+**Note**: This package is now deprecated. Distribution of the JavaScript version has been moved to the main npm distribution at https://www.npmjs.com/package/google-closure-compiler. This package will continue
+to work, but no new versions of the package will be published.
 
 <hr />
 
@@ -15,6 +16,9 @@ Unlike other packages, this allows Closure Compiler to run entirely in JS.
 This is an experimental release - meaning some features are not available and performance may not be on-par with the Java implementation - [details here](#transpilation).
 
 ## Usage
+
+*These instructions will continue to work, but the package is deprecated.
+Development has moved to https://www.npmjs.com/package/google-closure-compiler.*
 
 First, install the latest version:
 

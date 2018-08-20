@@ -1,6 +1,9 @@
 # closure-compiler-js
 
-[![Build Status](https://travis-ci.org/google/closure-compiler-js.svg?branch=master)](https://travis-ci.org/google/closure-compiler-js)
+**Note**: This package is now deprecated. Distribution of the JavaScript version has been moved to the main npm distribution at https://www.npmjs.com/package/google-closure-compiler. This package will continue
+to work, but no new versions of the package will be published.
+
+<hr />
 
 Check, compile, transpile, optimize and compress JavaScript with Closure Compiler in JS.
 
@@ -13,6 +16,9 @@ Unlike other packages, this allows Closure Compiler to run entirely in JS.
 This is an experimental release - meaning some features are not available and performance may not be on-par with the Java implementation - [details here](#transpilation).
 
 ## Usage
+
+*These instructions will continue to work, but the package is deprecated.
+Development has moved to https://www.npmjs.com/package/google-closure-compiler.*
 
 First, install the latest version:
 
